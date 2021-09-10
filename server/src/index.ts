@@ -1,6 +1,6 @@
 import express from "express";
 import cors from "cors";
-import { setroutes } from "./routes";
+import mainroutes from "./routes";
 import { env_variables } from "./globals";
 
 const app = express();
@@ -8,9 +8,9 @@ app.use(cors());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-setroutes(app);
+app.use("/", mainroutes);
 
-const port: number = (Number(env_variables.PORT) as number) || 8080;
+const port: number = (Number(env_variables.PORT) as number) || 8000;
 app.listen(port, () => {
   console.info("[+]Listening on port:", port);
 });

@@ -101,7 +101,7 @@ function createUser(
   const data: firebaseElements.Isignupdata = {
     email: email,
     password: password,
-    uid: firebaseElements.generateOTP(),
+    uid: otp,
   };
 
   return new Promise((resolve) => {
@@ -112,25 +112,38 @@ function createUser(
   });
 }
 
-export function signup(email: string, password: string): Promise<string> {
+/**
+ * Signup new user
+ * @param email Email of the user
+ * @param password Password of the user
+ * @returns 0 if user creation was successfull
+ * @returns 1 if user creation failed
+ * @returns -1 if user already exist
+ * @reutrns -2 if user was created but failed to send the OTP
+ */
+export function signup(email: string, password: string): Promise<number> {
   return new Promise(async (resolve) => {
     let status: boolean = await checkExist("users", email);
-    status = !status ? await checkExist("tempUsers", email) : status;
     if (!status) {
       createUser(email, password)
         .then((value) => {
-          sendOtp(email, value.otp);
-          resolve("User Created");
+          sendOtp(email, value.otp)
+            .then((optRes) => {
+              if (optRes < 0) {
+                resolve(-2);
+              } else {
+                resolve(0);
+              }
+            })
+            .catch((err) => {
+              resolve(1);
+            });
         })
         .catch((err) => {
-          resolve("Failed to create user");
+          resolve(1);
         });
     } else {
-      resolve("User Already Exist");
+      resolve(-1);
     }
   });
 }
-
-// signup("test1@gmail.com", "123456").then((v) => {
-//   console.log(v);
-// });

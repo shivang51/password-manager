@@ -1,24 +1,37 @@
 import express from "express";
-import { verifyOtp } from "./firebase";
+import * as Firebase from "./firebase";
+import * as ServerElements from "./serverElements";
 
 const key: string = "gotoheaven";
 
-verifyOtp("my.dev.acc.051@gmail.com", "728883").then((res) => {
-  if (res == 0) {
-    console.log("OTP Match");
-  } else if (res == 1) {
-    console.log("Otp match fail");
+const mainroutes = express.Router();
+
+mainroutes.get("/", async (req, res) => {
+  if (req.headers.authorization == key) {
+    res.send("hello");
   } else {
-    console.log("User does not exist");
+    res.send("Access Denied");
   }
 });
 
-export function setroutes(app: express.Application) {
-  app.get("/", async (req, res) => {
-    if (req.headers.authorization == "Bearer " + key) {
-      res.send("hello");
-    } else {
-      res.send("Access Denied");
-    }
-  });
-}
+mainroutes.post("/registeruser", async (req, res) => {
+  if (req.headers.authorization == key) {
+    const body: ServerElements.ICUReqBody = req.body;
+    const status = await Firebase.signup(body.gmail, body.password);
+    res.send(status.toString());
+  } else {
+    res.send("Access Denied");
+  }
+});
+
+mainroutes.post("/verifyotp", async (req, res) => {
+  if (req.headers.authorization == key) {
+    const body: ServerElements.IVerifyOTP = req.body;
+    const status = await Firebase.verifyOtp(body.gmail, body.otp);
+    res.send(status.toString());
+  } else {
+    res.send("Access Denied");
+  }
+});
+
+export = mainroutes;
