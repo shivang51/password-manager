@@ -18,7 +18,7 @@ interface IEnvVaribles {
 }
 
 const variables = {
-  PORT: 8080 || result.parsed?.PORT,
+  PORT: process.env.PORT || result.parsed?.PORT,
   GMAIL: process.env.GMAIL || result.parsed?.GMAIL,
   GMAIL_PASSWORD: process.env.GMAIL_PASSWORD || result.parsed?.GMAIL_PASSWORD,
   FIREBASE_PRIVATE_KEY:
