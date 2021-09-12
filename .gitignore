@@ -2,3 +2,4 @@ firebasekey.json
 node_modules
 .env
 .vscode
+heroku_build.bat

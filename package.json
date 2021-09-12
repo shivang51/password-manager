@@ -7,7 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start-dev": "nodemon ./src/index.ts",
     "build": "tsc --project ./",
-    "start": "node ./build/index.js"
+    "start": "nodemon ./src/index.ts"
   },
   "keywords": [
     "server.password.manager"
@@ -19,7 +19,8 @@
     "dotenv": "^10.0.0",
     "express": "^4.17.1",
     "firebase-admin": "^9.9.0",
-    "nodemailer": "^6.6.3"
+    "nodemailer": "^6.6.3",
+    "nodemon": "^2.0.12"
   },
   "devDependencies": {
     "@types/cors": "^2.8.10",
