@@ -1,6 +1,6 @@
 firebasekey.json
-node_modules
+node_modules/
 .env
-.vscode
+.vscode/
 heroku_build.bat
-build
+build/
