@@ -3,7 +3,7 @@ import internal from "stream";
 
 const result = dotenv.config({ path: __dirname + "\\..\\.env" });
 
-if (result.error) {
+if (result.error || !process.env) {
   console.error("Failed to parse env variables!");
 } else {
   console.info("Successfully parsed env variables 😀");
