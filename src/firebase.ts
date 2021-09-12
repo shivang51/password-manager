@@ -3,12 +3,12 @@ import * as firebaseElements from "./firbaseElements";
 import { sendOtp } from "./email";
 import { env_variables } from "./globals";
 
-const username: string = "my.dev.acc.051@gmail.com";
-
 admin.initializeApp({
-  credential: admin.credential.cert(
-    (__dirname + env_variables.FIREBASE_ADMIN_KEY) as string
-  ),
+  credential: admin.credential.cert({
+    projectId: env_variables.FIREBASE_PROJECT_ID,
+    privateKey: env_variables.FIREBASE_PRIVATE_KEY.replace(/\\n/g, "\n"),
+    clientEmail: env_variables.FIREBASE_CLIENT_EMAIL,
+  }),
 });
 
 const db: FirebaseFirestore.Firestore = admin.firestore();
