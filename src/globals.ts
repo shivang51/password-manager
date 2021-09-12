@@ -18,12 +18,12 @@ interface IEnvVaribles {
 
 console.log(process.env.GMAIL);
 
+const variables = {
+  PORT: 8080 || result.parsed.PORT,
+  FIREBASE_ADMIN_KEY: process.env.FIREBASE_ADMIN_KEY || result.parsed.FIREBASE_ADMIN_KEY,
+  GMAIL: process.env.GMAIL || result.parsed.GMAIL,
+  GMAIL_PASSWORD : process.env.GMAIL_PASSWORD || result.parsed.GMAIL_PASSWORD,
+};
 
-if(result.parsed){
 export const env_variables: IEnvVaribles =
-  result.parsed as unknown as IEnvVaribles;
-}
-else{
-export const env_variables: IEnvVaribles =
-  {PORT: 8080, FIREBASE_ADMIN_KEY: process.env.FIREBASE_ADMIN_KEY, GMAIL: process.env.GMAIL, GMAIL_PASSWORD : process.env.GMAIL_PASSWORD} as unknown as IEnvVaribles;
-}
+  variables as unknown as IEnvVaribles;
