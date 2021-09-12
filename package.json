@@ -4,10 +4,12 @@
   "description": "backend server for password manager",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "start-dev": "nodemon ./src/index.ts",
-    "build": "tsc --project ./",
-    "start": "nodemon ./src/index.ts"
+    "compile": "tsc --project ./",
+    "move-compiled": "copyfiles -u 2 build/src/*.js build/",
+    "clean": "del build\\src /F /Q && rmdir build\\src",
+    "build": "npm-run-all -s compile move-compiled clean",
+    "start": "nodemon ./build/index.js"
   },
   "keywords": [
     "server.password.manager"
@@ -15,19 +17,21 @@
   "author": "Shivang Sharma",
   "license": "ISC",
   "dependencies": {
+    "copyfiles": "^2.4.1",
     "cors": "^2.8.5",
     "dotenv": "^10.0.0",
     "express": "^4.17.1",
     "firebase-admin": "^9.9.0",
+    "movefiles": "^1.0.1",
     "nodemailer": "^6.6.3",
     "nodemon": "^2.0.12",
-    "ts-node": "^10.2.1",
-    "typescript": "^4.3.2"
+    "npm-run-all": "^4.1.5"
   },
   "devDependencies": {
     "@types/cors": "^2.8.10",
     "@types/express": "^4.17.12",
     "@types/node": "^15.6.1",
-    "@types/nodemailer": "^6.4.4"
+    "@types/nodemailer": "^6.4.4",
+    "typescript": "^4.3.2"
   }
 }
